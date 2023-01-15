@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './../../secutity/passport.jwt.strategy';
-import { UserAuthorityRepository } from './repository/user-authority.repository';
 import { PointService } from '../point/point.service';
 import { PointRepository } from '../point/point.repository';
 import { PointUserepository } from '../point/point-use.repository';
@@ -18,7 +17,6 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     TypeOrmExModule.forCustomRepository([
       UserRepository,
-      UserAuthorityRepository,
       PointRepository,
       PointUserepository,
     ]),

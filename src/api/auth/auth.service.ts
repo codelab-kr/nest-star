@@ -158,25 +158,7 @@ export class AuthService {
    */
   async tokenValidateUser(payload: TokenPayload): Promise<User | undefined> {
     const foundUser = await this.userService.findUserById(payload.id);
-    this.flatAuthorities(foundUser);
     return foundUser;
-  }
-
-  /**
-   * 권한을 string 배열로 리턴한다.
-   *
-   * @param {any} user
-   * @returns {User}
-   */
-  private flatAuthorities(user: any): User {
-    if (user && user.authorities) {
-      const authorities: string[] = [];
-      user.authorities.forEach((authority: any) =>
-        authorities.push(authority.authorityName),
-      );
-      user.authorities = authorities;
-    }
-    return user;
   }
 
   /**
@@ -188,7 +170,6 @@ export class AuthService {
   @UseGuards(JwtAuthGuard)
   authenticate(@Req() req: RequestWithUser): User {
     const user: User = req.user;
-    this.flatAuthorities(user);
     user.password = undefined;
     return user;
   }

@@ -8,7 +8,6 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserAuthority } from './user-authority.entity';
 import { PostEntity } from './../post/post.entity';
 import { Relation } from './../relation/relation.entity';
 import { Point } from '../point/point.entity';
@@ -51,11 +50,6 @@ export class User {
   @DeleteDateColumn({ name: 'deleted_at' })
   @ApiProperty({ description: '탈퇴일시분초' })
   public deletedAt: Date;
-
-  @OneToMany(() => UserAuthority, (userAuthority) => userAuthority.user, {
-    eager: true,
-  })
-  authorities?: any[];
 
   @OneToMany(() => Point, (point) => point.user, {
     eager: true,
