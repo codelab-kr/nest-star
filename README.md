@@ -144,20 +144,22 @@
 
 ```bash
 # 1. 프로젝트 생성
-git clone git@github.com:bmmaker/nestjs-star-point.git
+git clone git@github.com:bmmaker/nestjs-star.git
 
 # 2. 프로젝트 폴더로 이동
-cd nestjs-api-point
+cd nestjs-star
 
 # 3. 의존성 설치
+npm install -g yarn
 yarn install
 ```
 
 설치가 끝났으면 `.env.example` 파일명을 `.env`로 수정합니다.
 
 ```
-# APP
+# NODE SERVER
 APP_PORT=3000
+APP_HOST=localhost
 
 # DATABASE
 DB_TYPE=mysql
@@ -167,9 +169,14 @@ DB_ROOT_PASSWORD=rootpass
 DB_NAME=test
 DB_USERNAME=test
 DB_PASSWORD=test
+
+# JWT
+JWT_SECRET=secret
+JWT_EXPIRATION_TIME=300
 ```
 
-`.env`를 본인이 사용하려는 DB 연결 정보에 맞게 수정하면 됩니다. 예시 `.env`를 사용하게 되면 `DB_HOST`가 Docker 컨테이너에서 올라가는 데이터베이스를 사용하도록 설정했습니다.
+`.env`를 본인이 사용하려는 DB 연결 정보에 맞게 수정하면 됩니다. 
+예시 `.env`를 사용하게 되면 `DB_HOST`가 Docker 컨테이너에서 올라가는 데이터베이스를 사용하도록 설정했습니다.
 
 <br>
 
@@ -192,34 +199,38 @@ Dockerfile.dev 및 prod 는 DB + node.js(nest.js) 모두 docker 환경으로 사
 
 ```
 $ docker -v
-Docker version 20.10.17, build 100c701
+Docker version 20.10.22, build 3a2c30b
 ```
 
 ## Docker 환경 실행
 
 ```bash
 # 실행
-$ docker-compose -f docker-compose.dev.yml up -d
+$ docker-compose -f docker-compose.loc.yml up -d
 
 # 재시작
-$ docker-compose -f docker-compose.dev.yml restart
+$ docker-compose -f docker-compose.loc.yml restart
 
 # 중지
-$ docker-compose -f docker-compose.dev.yml down
+$ docker-compose -f docker-compose.loc.yml down
 
 # 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.dev.yml down -v
+$ docker-compose -f docker-compose.loc.yml down -v
 ```
 
 ## 백엔드 실행
 
 ```bash
-# 운영 환경으로 실행
-$ yarn start:prod
+# 로컬 환경으로 실행 (디버그)
+$ yarn start:debug
 
 # 개발 환경으로 실행
 $ yarn start:dev
+
+# 운영 환경으로 실행
+$ yarn start:prod
 ```
+
 
 ## 테스트
 
