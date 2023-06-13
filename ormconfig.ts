@@ -1,11 +1,14 @@
 /**
  * TypeORM 마이그레이션 목적으로만 사용
  */
+
+// TODO: TypeORM DB 연결 설정 수정해야 함
 export default {
   type: process.env.DB_TYPE,
-  host:
-    process.env.NODE_ENV === 'development' ? process.env.DB_HOST : 'localhost',
-  port: Number(process.env.DB_PORT),
+  host: process.env.NODE_ENV ? process.env.DB_HOST : 'localhost',
+  // host: 'localhost',
+  // host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT) || 3306,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,

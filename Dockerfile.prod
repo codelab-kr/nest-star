@@ -3,12 +3,12 @@ FROM node:18.12.1-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
+
 RUN yarn install --frozen-lockfile
 
 COPY . .
-RUN yarn build
 
-RUN yarn install --production
+RUN yarn build
 
 FROM node:18.12.1-alpine AS deploy
 
@@ -17,8 +17,19 @@ ENV NODE_ENV production
 RUN apk add --no-cache tzdata
 
 WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app ./
 
-EXPOSE 3000
+COPY package.json yarn.lock ./
 
-CMD ["node", "dist/src/main"]
+RUN yarn install --frozen-lockfile --production
+
+COPY --from=builder /usr/src/app/.env ./.env
+
+COPY --from=builder /usr/src/app/ormconfig.ts ./ormconfig.ts
+
+COPY --from=builder /usr/src/app/dist ./dist
+
+RUN apk add --no-cache --update bash
+
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
+
+RUN chmod +x /wait-for-it.sh

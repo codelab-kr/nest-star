@@ -12,7 +12,7 @@ services:
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
       - ./docker/mysql/logs:/var/log/mysql
     ports:
-      - 3306:3306
+      - ${DB_OUT_PORT}:${DB_PORT}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
@@ -22,24 +22,24 @@ services:
     restart: always
     networks:
       - app
-  server:
+  server-prod:
     build:
       context: ./
       dockerfile: Dockerfile.prod
-    container_name: nestjs-star-prod-erver
+    container_name: nestjs-star-prod-server
     restart: always
     volumes:
       - appdata:/app
     ports:
-      - 3000:3000
+      - 4000:${APP_PORT}
     depends_on:
       - db
     command:
       - bash
       - -c
       - |
-        /wait-for-it.sh db:3306 -t 15
-        yarn start:dev
+        /wait-for-it.sh db:${DB_PORT} -t 15
+        yarn start:prod
     networks:
       - app
 
