@@ -165,13 +165,14 @@ APP_HOST=localhost
 DB_TYPE=mysql
 DB_HOST=db
 DB_PORT=3306
+DB_OUT_PORT=23306
 DB_ROOT_PASSWORD=rootpass
 DB_NAME=test
 DB_USERNAME=test
 DB_PASSWORD=test
 
 # JWT
-JWT_SECRET=secret
+JWT_SECRET=secretfsdfsdf
 JWT_EXPIRATION_TIME=300
 ```
 
@@ -202,7 +203,7 @@ $ docker -v
 Docker version 20.10.22, build 3a2c30b
 ```
 
-## Docker 환경 실행
+## Docker 환경 실행 - 로컬 DB
 
 ```bash
 # 실행
@@ -218,19 +219,48 @@ $ docker-compose -f docker-compose.loc.yml down
 $ docker-compose -f docker-compose.loc.yml down -v
 ```
 
-## 백엔드 실행
+## 로컬 백엔드 실행
 
 ```bash
-# 로컬 환경으로 실행 (디버그)
-$ yarn start:debug
-
-# 개발 환경으로 실행
 $ yarn start:dev
-
-# 운영 환경으로 실행
-$ yarn start:prod
 ```
 
+
+## 개발 환경
+```bash
+# 실행
+$ docker-compose -f docker-compose.dev.yml up -d
+
+# 재시작
+$ docker-compose -f docker-compose.dev.yml restart
+
+# 중지
+$ docker-compose -f docker-compose.dev.yml down
+
+# 중지 (도커 볼륨 삭제)
+$ docker-compose -f docker-compose.dev.yml down -v
+
+# cf
+$ yarn start:dev
+```
+
+## 운영 환경으로 실행
+```bash
+# 실행
+$ docker-compose -f docker-compose.prod.yml up -d
+
+# 재시작
+$ docker-compose -f docker-compose.prod.yml restart
+
+# 중지
+$ docker-compose -f docker-compose.prod.yml down
+
+# 중지 (도커 볼륨 삭제)
+$ docker-compose -f docker-compose.prod.yml down -v
+
+# cf
+$ yarn start:prod
+```
 
 ## 테스트
 
@@ -240,6 +270,13 @@ $ yarn test
 
 ## API Documents
 
+### Swagger
+로컬
 - http://localhost:3000/api-docs
 
+개발, 운영
+- http://localhost:4000/api-docs
+
+
+### 포스트맨
 - [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/17580924-a13ac17e-0235-43c8-b894-61433abf80df?action=collection%2Ffork&collection-url=entityId%3D17580924-a13ac17e-0235-43c8-b894-61433abf80df%26entityType%3Dcollection%26workspaceId%3Daefa633a-e7e3-46e9-8a90-30c62422a3c1)
