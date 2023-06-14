@@ -5,13 +5,19 @@ import { PointUseDTO } from './dto/point-use.dto';
 import { PointRepository } from './point.repository';
 import { Connection } from 'typeorm';
 import { PointUserepository } from './point-use.repository';
-import { Point } from './point.entity';
+import { Category, Point } from './point.entity';
 import {
   paginate,
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { Category } from 'src/type/category-type';
+// import { Category } from 'src/type/category-type';
+
+// export enum Category {
+//   SAVE = 'SAVE',
+//   USE = 'USE',
+//   USE_CANCLE = 'USE_CANCLE',
+// }
 
 @Injectable()
 export class PointService {
@@ -75,7 +81,9 @@ export class PointService {
     try {
       const pointId = (
         await this.pointRepository.save({
-          ...pointDTO,
+          amount: amount,
+          breakdown: pointDTO.breakdown,
+          userId: userId,
           category: Category.USE,
           expirationDate: '9999-12-31',
         })
@@ -136,7 +144,7 @@ export class PointService {
     try {
       const pointIdUse = (
         await this.pointRepository.save({
-          category: pointDTO.category,
+          category: Category.USE_CANCLE,
           breakdown: pointDTO.breakdown,
           amount: pointDTO.amount,
           userId: userId,

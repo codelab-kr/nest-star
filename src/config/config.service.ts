@@ -4,10 +4,6 @@ import * as path from 'path';
 export class ConfigService {
   private readonly envConfig: { [key: string]: string };
 
-  // constructor(filePath: string) {
-  //   this.envConfig = dotenv.parse(fs.readFileSync(filePath));
-  //   console.log(fs.readFileSync(filePath));
-  // }
   constructor() {
     this.envConfig = dotenv.config({
       path: path.resolve(__dirname + `/env/.env`),
@@ -15,10 +11,6 @@ export class ConfigService {
     console.log(
       'path.resolve(__dirname + `/env/.env`): ',
       path.resolve(__dirname + `/env/.env`),
-    );
-    console.log(
-      'this.envConfig: ',
-      [__dirname + '/../../**/*.entity{.ts}'].flat(),
     );
   }
 

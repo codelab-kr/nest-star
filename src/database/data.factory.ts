@@ -6,7 +6,13 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 // import { User } from '../api/auth/user.entity';
 @Injectable()
 export class DataFactory implements TypeOrmOptionsFactory {
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) {
+    console.log(
+      'this.configService.isEnv(localhost): ',
+      this.configService.isEnv('localhost'),
+    );
+    console.log('this.configService.__dirname: ', __dirname);
+  }
 
   dataSourceOptions: DataSourceOptions = {
     type: this.configService.get('DB_TYPE') as any,
@@ -23,18 +29,12 @@ export class DataFactory implements TypeOrmOptionsFactory {
     logging: this.configService.isEnv('production')
       ? ['error']
       : ['error', 'query', 'schema'],
-    entities: [__dirname + '/../../**/*.entity{.ts}'],
+    entities: [__dirname + '/../api/**/*.entity.{ts, js}'],
     migrations: ['./*.ts'],
     migrationsTableName: 'migrations',
   };
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    console.log(
-      'this.configService.get(DB_TYPE):',
-      this.configService.getEnvConfigPath,
-    );
-    // console.log('this.configService.get(DB_TYPE):', this.dataSourceOptions.entities.entries);
-    // console.log('this.configService.nodeEnv:', this.configService.nodeEnv);
     return this.dataSourceOptions;
   }
 }

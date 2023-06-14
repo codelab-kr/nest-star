@@ -11,7 +11,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PostEntity } from './../post/post.entity';
 import { Relation } from './../relation/relation.entity';
 import { Point } from '../point/point.entity';
-import { LeaveReason } from 'src/type/leave-type';
+// import { LeaveReason } from 'src/type/leave-type';
+
+export enum LeaveReason {
+  NO_CONTENT = '흥미로운 컨텐츠가 부족해서',
+  NO_FRIEND = '친구가 없어서',
+  ETC = '기타',
+}
 
 @Entity('user')
 export class User {

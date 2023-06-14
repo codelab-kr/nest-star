@@ -9,8 +9,14 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Scope } from './../../type/scope-type';
+// import { Scope } from './../../type/scope-type';
 import { User } from '../auth/user.entity';
+
+export enum Scope {
+  PUBLIC = 'PUBLIC',
+  FRIEND = 'FRIEND',
+  PRIVATE = 'PRIVATE',
+}
 
 @Entity('post')
 export class PostEntity {

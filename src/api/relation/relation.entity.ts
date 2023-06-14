@@ -10,9 +10,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { RelationType } from '../../type/relation-type';
+// import { RelationType } from '../../type/relation-type';
 import { User } from '../auth/user.entity';
 import { RelationDetail } from './relation-detail.entity';
+
+export enum RelationType {
+  FOLLOW = 'FOLLOW',
+  UNFOLLOW = 'UNFOLLOW',
+  BLOCKED = 'BLOCKED',
+  NON_BLOCKED = 'NON_BLOCKED',
+}
 
 @Entity('relation')
 export class Relation {
