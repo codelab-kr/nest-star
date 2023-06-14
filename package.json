@@ -23,9 +23,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "docker:build": "docker-compose up -d --build",
     "docker:down": "docker-compose down -v",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/migrations -n",
-    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create -d src/migrations -n",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:generate": "cd src/database/migrations && npx typeorm-ts-node-commonjs migration:generate -d ../data.source.ts",
+    "migration:create": "cd src/database/migrations && npx typeorm-ts-node-commonjs migration:create",
+    "migration:run": "cd src/database/migrations && npx typeorm-ts-node-commonjs migration:run -d ../data.source.ts",
+    "migration:revert": "cd src/database/migrations && npx typeorm-ts-node-commonjs migration:revert  -d ../data.source.ts",
     "prepare": "husky install"
   },
   "lint-staged": {

@@ -12,7 +12,7 @@ services:
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
       - ./docker/mysql/logs:/var/log/mysql
     ports:
-      - ${DB_OUT_PORT}:${DB_PORT}
+      - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
@@ -31,22 +31,20 @@ services:
     volumes:
       - appdata:/app
     ports:
-      - 4000:${APP_PORT}
+      - ${APP_HOST_PORT_DEV}:${APP_CONTAINER_PORT}
     depends_on:
       - db
     command:
       - bash
       - -c
       - |
-        /wait-for-it.sh db:${DB_PORT} -t 15
+        /wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15
         yarn start:dev
     networks:
       - app
-
 networks:
   app:
     driver: bridge
-
 volumes:
   dbdata:
     driver: local

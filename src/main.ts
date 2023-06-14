@@ -18,7 +18,7 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  const port = configService.get('APP_PORT');
+  const port = configService.get('APP_CONTAINER_PORT');
   await app.listen(port);
 
   console.info(`Server listening on port ${port}`);

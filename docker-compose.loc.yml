@@ -12,7 +12,7 @@ services:
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
       - ./docker/mysql/logs:/var/log/mysql
     ports:
-      - ${DB_OUT_PORT}:${DB_PORT}
+      - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
@@ -25,7 +25,6 @@ services:
 networks:
   app:
     driver: bridge
-
 volumes:
   dbdata:
     driver: local
