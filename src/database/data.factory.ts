@@ -29,7 +29,7 @@ export class DataFactory implements TypeOrmOptionsFactory {
     logging: this.configService.isEnv('production')
       ? ['error']
       : ['error', 'query', 'schema'],
-    entities: [__dirname + '/../api/**/*.entity.{ts, js}'],
+    entities: [__dirname + '/../api/**/*.entity{.ts,.js}'],
     migrations: ['./*.ts'],
     migrationsTableName: 'migrations',
   };
