@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Scope } from './../../../type/scope-type';
+import { Scope } from '../post.entity';
 
 export class PostUpdateRequestDto {
   @IsNotEmpty({ message: '아이디(id)는 필수값입니다.' })

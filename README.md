@@ -155,39 +155,19 @@ yarn install
 ```
 
 설치가 끝났으면 `.env.example` 파일명을 `.env`로 수정합니다.
-
-```
-# NODE SERVER
-APP_PORT=3000
-APP_HOST=localhost
-
-# DATABASE
-DB_TYPE=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_OUT_PORT=23306
-DB_ROOT_PASSWORD=rootpass
-DB_NAME=test
-DB_USERNAME=test
-DB_PASSWORD=test
-
-# JWT
-JWT_SECRET=secretfsdfsdf
-JWT_EXPIRATION_TIME=300
-```
-
 `.env`를 본인이 사용하려는 DB 연결 정보에 맞게 수정하면 됩니다. 
-예시 `.env`를 사용하게 되면 `DB_HOST`가 Docker 컨테이너에서 올라가는 데이터베이스를 사용하도록 설정했습니다.
+현재 `.env`의 `DB_HOST`는 Docker 컨테이너에서 실행되는 데이터베이스를 가리키고 있습니다.
 
 <br>
 
-## Docker 개발환경
+## Docker 환경
 
-Dockerfile.loc 은 로컬 환경에서, Dockerfile.dev 는 개발 환경으로 사용하는 목적이고
-Dockerfile.prod 는 운영 환경에서 사용할 수 있도록 최적화했습니다.
+Dockerfile.loc 은 로컬 환경에서, 
+Dockerfile.dev 는 개발 환경으로 사용하는 목적이고
+Dockerfile.prod 는 운영 환경에서 사용할 수 있도록 최적화하였습니다.
 
 Dockerfile.loc 은 DB만 docker 환경에 올리고
-Dockerfile.dev 및 prod 는 DB + node.js(nest.js) 모두 docker 환경으로 사용하도록 하였습니다.
+Dockerfile.dev 및 prod 는 DB와 node.js(nest.js) 모두 docker 환경으로 사용하도록 하였습니다.
 
 <br>
 
@@ -203,59 +183,60 @@ $ docker -v
 Docker version 20.10.22, build 3a2c30b
 ```
 
-## 로컬 백엔드 실행
+## 로컬 환경 실행
 
 ```bash
 # DB 실행
-$ docker-compose -f docker-compose.loc.yml up -d
+$ docker-compose -f docker-compose.loc.yml  --env-file './src/config/env/.env' up -d
 
 # DB 재시작
-$ docker-compose -f docker-compose.loc.yml restart
+$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' restart
 
 # DB 중지
-$ docker-compose -f docker-compose.loc.yml down
+$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' down
 
 # DB 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.loc.yml down -v
+$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' down -v
 
-$ yarn start:debug
+$ yarn start:debug 또는 $ yarn start:dev
 ```
 
 
-## 개발 환경
+## 개발 환경 실행
 ```bash
 # 실행
-$ docker-compose -f docker-compose.dev.yml up -d
+$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' up -d
 
 # 재시작
-$ docker-compose -f docker-compose.dev.yml restart
+$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' restart
 
 # 중지
-$ docker-compose -f docker-compose.dev.yml down
+$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' down
 
 # 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.dev.yml down -v
+$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' down -v
 
-# cf
-$ yarn start:dev
 ```
 
-## 운영 환경으로 실행
+## 운영 환경 실행
 ```bash
 # 실행
-$ docker-compose -f docker-compose.prod.yml up -d
+$ docker-compose -f docker-compose.prod.yml  --env-file './src/config/env/.env' up -d
 
 # 재시작
-$ docker-compose -f docker-compose.prod.yml restart
+$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' restart
 
 # 중지
-$ docker-compose -f docker-compose.prod.yml down
+$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' down
 
 # 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.prod.yml down -v
+$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' down -v
+```
 
-# cf
-$ yarn start:prod
+## DB migration
+```bash
+yarn run migration:generate CreateTables
+yarn run migration:run
 ```
 
 ## 테스트
@@ -276,5 +257,3 @@ $ yarn test
 - 운영
   http://localhost:5000/api-docs
 
-### 포스트맨
-- [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/17580924-a13ac17e-0235-43c8-b894-61433abf80df?action=collection%2Ffork&collection-url=entityId%3D17580924-a13ac17e-0235-43c8-b894-61433abf80df%26entityType%3Dcollection%26workspaceId%3Daefa633a-e7e3-46e9-8a90-30c62422a3c1)

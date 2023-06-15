@@ -1,35 +1,24 @@
-FROM node:18.12.1-alpine AS builder
+FROM node:18.16.0-alpine3.17 AS builder
 
 WORKDIR /usr/src/app
-
-COPY package.json yarn.lock ./
-
-RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN yarn build
+RUN yarn install && yarn build
 
-FROM node:18.12.1-alpine AS deploy
+FROM node:18.16.0-alpine3.17 AS deploy
 
 ENV NODE_ENV production
+ENV TZ=Asia/Seoul
 
-RUN apk add --no-cache tzdata
+RUN apk --no-cache add tzdata && \
+   cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+   echo $TZ > /etc/timezone \
+   apk del tzdata
 
 WORKDIR /usr/src/app
-
-COPY package.json yarn.lock ./
-
+COPY package.json yarn.lock wait-for-it.sh  ./
 RUN yarn install --frozen-lockfile --production
-
-COPY --from=builder /usr/src/app/.env ./.env
-
-COPY --from=builder /usr/src/app/ormconfig.ts ./ormconfig.ts
-
-COPY --from=builder /usr/src/app/dist ./dist
-
+COPY --from=builder /usr/src/app/dist ./dist/
 RUN apk add --no-cache --update bash
-
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
-
-RUN chmod +x /wait-for-it.sh
+RUN chmod +x ./wait-for-it.sh

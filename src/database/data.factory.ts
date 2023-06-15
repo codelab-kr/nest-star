@@ -26,9 +26,10 @@ export class DataFactory implements TypeOrmOptionsFactory {
     password: this.configService.get('DB_PASSWORD'),
     database: this.configService.get('DB_NAME'),
     synchronize: false,
-    logging: this.configService.isEnv('production')
-      ? ['error']
-      : ['error', 'query', 'schema'],
+    logging: true,
+    // logging: this.configService.isEnv('production')
+    //   ? ['error']
+    //   : ['error', 'query', 'schema'],
     entities: [__dirname + '/../api/**/*.entity{.ts,.js}'],
     migrations: ['./*.ts'],
     migrationsTableName: 'migrations',

@@ -8,10 +8,9 @@ export class ConfigService {
     this.envConfig = dotenv.config({
       path: path.resolve(__dirname + `/env/.env`),
     }).parsed;
-    console.log(
-      'path.resolve(__dirname + `/env/.env`): ',
-      path.resolve(__dirname + `/env/.env`),
-    );
+    console.log('env path : ', path.resolve(__dirname + `/env/.env`));
+    console.log(this.envConfig);
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
   }
 
   get(key: string): string {

@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthService } from 'src/api/auth/auth.service';
 import { UserService } from 'src/api/auth/user.service';
-import { Scope } from 'src/type/scope-type';
+import { Scope } from '../api/post/post.entity';
 
 @Injectable()
 export class ScopesGuard implements CanActivate {

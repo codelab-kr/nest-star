@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { Point } from './point.entity';
-import { CustomRepository } from '../../decorator/typeorm-ex.decorator';
+import { CustomRepository } from '../../typeorm-ex/typeorm-ex.decorator';
 
-@CustomRepository(Point)
+@CustomRepository({ entity: Point })
 export class PointRepository extends Repository<Point> {}

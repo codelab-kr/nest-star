@@ -10,7 +10,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-// import { RelationType } from '../../type/relation-type';
 import { User } from '../auth/user.entity';
 import { RelationDetail } from './relation-detail.entity';
 

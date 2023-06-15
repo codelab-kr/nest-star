@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, Length, IsNumber } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { LeaveReason } from 'src/type/leave-type';
+import { LeaveReason } from '../user.entity';
 
 export class UserDeleteRequestDto {
   @IsNotEmpty({ message: '아이디(id)는 필수값입니다.' })

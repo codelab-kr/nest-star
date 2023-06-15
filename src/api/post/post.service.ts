@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { PostRepository } from './repository/post.repository';
-import { PostEntity as Post } from './post.entity';
+import { PostEntity as Post, Scope } from './post.entity';
 import { PostCreateRequestDto } from './dto/post-create-request.dto';
 import { isEmpty } from '../../util/shared.util';
 import { PostMessage } from './post.message';
@@ -12,9 +12,7 @@ import { Like } from 'typeorm';
 import { PostUpdateRequestDto } from './dto/post-update-request.dto';
 import { PostResponseDto } from './dto/post-response.dto';
 import { RelationService } from '../relation/relation.service';
-import { Relation } from '../relation/relation.entity';
-import { RelationType } from 'src/type/relation-type';
-import { Scope } from 'src/type/scope-type';
+import { Relation, RelationType } from '../relation/relation.entity';
 
 @Injectable()
 export class PostService {

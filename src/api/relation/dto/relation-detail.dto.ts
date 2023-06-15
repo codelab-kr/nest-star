@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Relation } from '../relation.entity';
-import { RelationType } from '../../../type/relation-type';
+import { Relation, RelationType } from '../relation.entity';
 
 export class RelationDetailDto {
   @IsNotEmpty({ message: '유저ID(userId)은 필수값입니다.' })

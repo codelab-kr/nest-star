@@ -11,7 +11,7 @@ import { UserUpdateRequestDto } from './dto/user-update-request.dto';
 import { UserDeleteRequestDto } from './dto/user-delete-request.dto';
 import { PointService } from '../point/point.service';
 import { SavePointDTO, UsePointDTO } from '../point/dto/point.dto';
-import { Category } from 'src/type/category-type';
+import { Category } from '../point/point.entity';
 
 @Injectable()
 export class UserService {

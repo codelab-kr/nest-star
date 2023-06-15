@@ -4,13 +4,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { RelationRepository } from './repository/relation.repository';
-import { Relation as Relation } from './relation.entity';
+import { Relation as Relation, RelationType } from './relation.entity';
 import { isEmpty } from '../../util/shared.util';
 import { RelationMessage } from './relation.message';
 import { FindOneOptions } from 'typeorm';
 import { RelationDetailRepository } from './repository/relation-detail.repository';
 import { RelationDetail } from './relation-detail.entity';
-import { RelationType } from 'src/type/relation-type';
 import { RelationDetailDto } from './dto/relation-detail.dto';
 import { RelationDto } from './dto/relation.dto';
 

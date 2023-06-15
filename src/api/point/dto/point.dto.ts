@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { Category } from '../../../type/category-type';
 import { PointAbstractDTO } from './point.abstract.dto';
-import { Point } from './../point.entity';
+import { Category, Point } from './../point.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class SavePointDTO extends PointAbstractDTO {
@@ -10,7 +9,7 @@ export class SavePointDTO extends PointAbstractDTO {
     description: '구분: 적립(SAVE), 사용(USE), 취소(USE_CANCLE)',
     default: Category.SAVE,
   })
-  category!: Category;
+  category: Category = Category.SAVE;
 
   @IsNotEmpty({ message: '적요(breakdown)은 필수값입니다.' })
   @IsString({ message: '적요(breakdown)의 형식이 올바르지 않습니다.' })
@@ -37,7 +36,7 @@ export class UsePointDTO extends PointAbstractDTO {
     description: '구분: 적립(SAVE), 사용(USE), 취소(USE_CANCLE)',
     default: Category.USE,
   })
-  category: Category;
+  category: Category = Category.USE;
 
   @IsNotEmpty({ message: '적요(breakdown)은 필수값입니다.' })
   @IsString({ message: '적요(breakdown)의 형식이 올바르지 않습니다.' })

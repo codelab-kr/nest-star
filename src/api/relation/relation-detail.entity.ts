@@ -7,8 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { RelationType } from '../../type/relation-type';
-import { Relation } from './relation.entity';
+import { Relation, RelationType } from './relation.entity';
 
 @Entity('relation_detail')
 export class RelationDetail {

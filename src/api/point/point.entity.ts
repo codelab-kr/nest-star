@@ -8,7 +8,6 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-// import { Category } from '../../type/category-type';
 import { PointUse } from './point-use.entity';
 import { User } from '../auth/user.entity';
 

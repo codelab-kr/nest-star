@@ -1,6 +1,10 @@
 import { Repository } from 'typeorm';
-import { Relation as Relation } from '../relation.entity';
-import { CustomRepository } from '../../../decorator/typeorm-ex.decorator';
+import { Relation } from '../relation.entity';
+import { CustomRepository } from '../../../typeorm-ex/typeorm-ex.decorator';
 
-@CustomRepository(Relation)
-export class RelationRepository extends Repository<Relation> {}
+@CustomRepository({ entity: Relation })
+export class RelationRepository extends Repository<Relation> {
+  async findRelations(): Promise<Relation[]> {
+    return await this.find();
+  }
+}

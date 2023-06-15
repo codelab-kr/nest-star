@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmExModule } from '../../database/typeorm-ex.module';
 import { RelationRepository } from './repository/relation.repository';
 import { RelationController } from './relation.controller';
 import { RelationService } from './relation.service';
@@ -13,6 +12,7 @@ import { PointService } from '../point/point.service';
 import { PointRepository } from '../point/point.repository';
 import { PointUserepository } from '../point/point-use.repository';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmExModule } from '../../typeorm-ex/typeorm-ex.module';
 
 @Module({
   imports: [

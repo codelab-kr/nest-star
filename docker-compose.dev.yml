@@ -8,9 +8,7 @@ services:
       - --default-time-zone=+09:00
     volumes:
       - dbdata:/var/lib/mysql
-      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
-      - ./docker/mysql/logs:/var/log/mysql
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
     ports:
       - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
     environment:
@@ -29,7 +27,7 @@ services:
     container_name: nestjs-star-dev-server
     restart: always
     volumes:
-      - appdata:/app
+      - appdata:/usr/src/app
     ports:
       - ${APP_HOST_PORT_DEV}:${APP_CONTAINER_PORT}
     depends_on:
@@ -38,7 +36,7 @@ services:
       - bash
       - -c
       - |
-        /wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15
+        ./wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15
         yarn start:dev
     networks:
       - app

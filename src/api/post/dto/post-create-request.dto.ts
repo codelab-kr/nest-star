@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { PostEntity } from '../post.entity';
-import { Scope } from './../../../type/scope-type';
+import { PostEntity, Scope } from '../post.entity';
 
 export class PostCreateRequestDto {
   @IsNotEmpty({ message: '제목(title)은 필수값입니다.' })

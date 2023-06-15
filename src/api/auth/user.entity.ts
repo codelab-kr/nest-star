@@ -11,7 +11,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PostEntity } from './../post/post.entity';
 import { Relation } from './../relation/relation.entity';
 import { Point } from '../point/point.entity';
-// import { LeaveReason } from 'src/type/leave-type';
+
+export enum Role {
+  USER = 'ROLE_USER',
+  ADMIN = 'ROLE_ADMIN',
+}
 
 export enum LeaveReason {
   NO_CONTENT = '흥미로운 컨텐츠가 부족해서',
@@ -37,11 +41,11 @@ export class User {
   @ApiProperty({ description: '이름' })
   username: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   @ApiProperty({ description: '탈퇴사유' })
   leave_reason: LeaveReason;
 
-  @Column({ length: 1000 })
+  @Column({ length: 1000, nullable: true })
   @ApiProperty({ description: '탈퇴사유상세' })
   leave_reason_detail: string;
 

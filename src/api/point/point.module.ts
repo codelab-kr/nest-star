@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmExModule } from '../../database/typeorm-ex.module';
+import { TypeOrmExModule } from '../../typeorm-ex/typeorm-ex.module';
 import { PointRepository } from './point.repository';
 import { PointController } from './point.controller';
 import { PointService } from './point.service';

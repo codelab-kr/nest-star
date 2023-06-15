@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Scope } from './../../../type/scope-type';
+import { Scope } from '../post.entity';
 
 export class PostDto {
   @ApiProperty({ description: 'ID' })
