@@ -35,7 +35,6 @@ import { FileModule } from './file/file.module';
     PointModule,
     TypeOrmExModule,
     ExceptionModule,
-
     BatchModule,
     FileModule,
   ],
