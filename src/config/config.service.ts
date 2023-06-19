@@ -6,9 +6,9 @@ export class ConfigService {
 
   constructor() {
     this.envConfig = dotenv.config({
-      path: path.resolve(__dirname + `/env/.env`),
+      path: path.resolve(__dirname + `/../../.env`),
     }).parsed;
-    console.log('env path : ', path.resolve(__dirname + `/env/.env`));
+    console.log('env path : ', path.resolve(__dirname + `/../../.env`));
     console.log(this.envConfig);
     console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
   }
@@ -26,6 +26,6 @@ export class ConfigService {
   }
 
   get getEnvConfigPath(): string {
-    return path.resolve(__dirname + `../../.env`);
+    return path.resolve(__dirname + `/../../.env`);
   }
 }

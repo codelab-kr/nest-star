@@ -4,7 +4,7 @@
  
   ## 기술스택
 
-- 백엔드서버 (port: 3000, 4000, 5000)
+- 백엔드서버 (port: 개발 4000, 운영 8000)
 
   - 프레임워크: nest.js
 
@@ -56,7 +56,7 @@
 
 ## 데이터 구성
 
-![erd](/docker/mysql/erd.png)
+![erd](/erd.png)
 
 # 상세기능
 
@@ -144,30 +144,26 @@
 
 ```bash
 # 1. 프로젝트 생성
+
 git clone git@github.com:bmmaker/nestjs-star.git
 
 # 2. 프로젝트 폴더로 이동
 cd nestjs-star
 
-# 3. 의존성 설치
-npm install -g yarn
-yarn install
-```
-
-설치가 끝났으면 `.env.example` 파일명을 `.env`로 수정합니다.
+# 3. .env 파일 생성
+`.env.example` 파일명을 `.env`로 수정합니다.
 `.env`를 본인이 사용하려는 DB 연결 정보에 맞게 수정하면 됩니다. 
 현재 `.env`의 `DB_HOST`는 Docker 컨테이너에서 실행되는 데이터베이스를 가리키고 있습니다.
+```
 
 <br>
 
 ## Docker 환경
 
-Dockerfile.loc 은 로컬 환경에서, 
 Dockerfile.dev 는 개발 환경으로 사용하는 목적이고
 Dockerfile.prod 는 운영 환경에서 사용할 수 있도록 최적화하였습니다.
-
-Dockerfile.loc 은 DB만 docker 환경에 올리고
-Dockerfile.dev 및 prod 는 DB와 node.js(nest.js) 모두 docker 환경으로 사용하도록 하였습니다.
+DB와 node.js(nest.js) 모두 docker 환경으로 사용하도록 하였습니다.
+dev 환경에서는 호스트의 현재 경로를 볼륨 마운트하여 코드 수정시 자동으로 서버를 재시작하도록 하였습니다.
 
 <br>
 
@@ -178,66 +174,54 @@ Dockerfile.dev 및 prod 는 DB와 node.js(nest.js) 모두 docker 환경으로 �
 
 - 터미널(cmd 등)에서 정상 설치 확인
 
-```
+```bash
 $ docker -v
 Docker version 20.10.22, build 3a2c30b
 ```
 
-## 로컬 환경 실행
 
-```bash
-# DB 실행
-$ docker-compose -f docker-compose.loc.yml  --env-file './src/config/env/.env' up -d
-
-# DB 재시작
-$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' restart
-
-# DB 중지
-$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' down
-
-# DB 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.loc.yml --env-file './src/config/env/.env' down -v
-
-$ yarn start:debug 또는 $ yarn start:dev
-```
-
-
-## 개발 환경 실행
+## 개발 환경
 ```bash
 # 실행
-$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' up -d
+$ docker-compose up -d
 
-# 재시작
-$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' restart
+# 프로세스 확인
+$ docker-compose ps
 
-# 중지
-$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' down
-
-# 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.dev.yml --env-file './src/config/env/.env' down -v
-
-```
-
-## 운영 환경 실행
-```bash
-# 실행
-$ docker-compose -f docker-compose.prod.yml  --env-file './src/config/env/.env' up -d
-
-# 재시작
-$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' restart
-
-# 중지
-$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' down
-
-# 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.prod.yml --env-file './src/config/env/.env' down -v
-```
+# 로그 확인
+$ docker-compose logs -f
 
 ## DB migration
-```bash
-yarn run migration:generate CreateTables
-yarn run migration:run
+$ docker exec -it star-server-dev bash
+> 컨테이너ID:/usr/src/app# yarn run migration:generate CreateTables
+> 컨테이너ID:/usr/src/app# yarn run migration:run
+
+# 재시작
+$ docker-compose restart
+
+# 중지
+$ docker-compose down
+
+# 중지 (도커 볼륨 삭제)
+$ docker-compose down -v
 ```
+
+## 운영 환경
+```bash
+# 실행
+$ docker-compose -f docker-compose.prod.yml  up -d
+
+# 재시작
+$ docker-compose -f docker-compose.prod.yml restart
+
+# 중지
+$ docker-compose -f docker-compose.prod.yml down
+
+# 중지 (도커 볼륨 삭제)
+$ docker-compose -f docker-compose.prod.yml down -v
+```
+
+
 
 ## 테스트
 
@@ -248,9 +232,6 @@ $ yarn test
 ## API Documents
 
 ### Swagger
-- 로컬
-  http://localhost:3000/api-docs
-
 - 개발
   http://localhost:4000/api-docs
 
