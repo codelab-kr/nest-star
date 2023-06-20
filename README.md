@@ -1,7 +1,4 @@
-# 개발 환경 (Docker 적용)
-
-  <br>
- 
+# 개요
   ## 기술스택
 
 - 백엔드서버 (port: 개발 4000, 운영 8000)
@@ -20,19 +17,13 @@
 
 - DB 서버
 
-  - MySQL (port: 13306, 23306)
+  - MySQL (port: 컨테이너 3306, 호스트 13306)
 
   <br>
 
 ## 특징
 
 - 프레임워크가 제공하는 객체지향 개발적 구조를 활용하기 위해 NestJS 를 선택
-
-- 제시된 요구사항 중 2건을 제외하고 전체 개발 완료
-
-  (제외 기능: 이모티콘 기능, 댓글, 제외 사유: 개인일정 상 개발기간 부족)
-
-- 포인트 기능, 헬스 체크 기능 추가
 
 - filfer 및 message 파일을 통해 error handling 표준화
 
@@ -42,25 +33,16 @@
 
 - 환경설정 파일, 도커 파일 별도 분리
 
-- api document swagger, postman 동시 제공
-
-## 단점
-
-- 관리자 기능 없음
-
-- 시간 상 jest 테스트 구현 못 함
-
-  <br>
+- swagger api document 제공
 
   <br>
 
 ## 데이터 구성
 
-![erd](/erd.png)
-
+![erd](/.etc/erd.png)
+  <br>
+  <br>
 # 상세기능
-
-<br>
 
 ## 회원
 
@@ -138,7 +120,7 @@
 
 <br><br>
 
-# 개발환경 구축 가이드
+# 개발환경 구성
 
 ## 설치 및 구성
 
@@ -178,56 +160,49 @@ dev 환경에서는 호스트의 현재 경로를 볼륨 마운트하여 코드 
 $ docker -v
 Docker version 20.10.22, build 3a2c30b
 ```
-
+<br>
 
 ## 개발 환경
 ```bash
 # 실행
-$ docker-compose up -d
+$ docker-compose --profile dev up -d  
 
 # 프로세스 확인
-$ docker-compose ps
+$ docker-compose --profile dev ps
 
 # 로그 확인
-$ docker-compose logs -f
+$ docker-compose --profile dev logs -f
 
 ## DB migration
-$ docker exec -it star-server-dev bash
+$ docker exec -it star-server bash
 > 컨테이너ID:/usr/src/app# yarn run migration:generate CreateTables
 > 컨테이너ID:/usr/src/app# yarn run migration:run
 
 # 재시작
-$ docker-compose restart
+$ docker-compose --profile dev restart
 
 # 중지
-$ docker-compose down
+$ docker-compose --profile dev down
 
 # 중지 (도커 볼륨 삭제)
-$ docker-compose down -v
+$ docker-compose down --profile dev -v
 ```
+<br>
 
 ## 운영 환경
 ```bash
 # 실행
-$ docker-compose -f docker-compose.prod.yml  up -d
-
-# 재시작
-$ docker-compose -f docker-compose.prod.yml restart
-
-# 중지
-$ docker-compose -f docker-compose.prod.yml down
-
-# 중지 (도커 볼륨 삭제)
-$ docker-compose -f docker-compose.prod.yml down -v
+$ docker-compose --profile prod up -d 
 ```
 
-
+<br>
 
 ## 테스트
 
 ```bash
 $ yarn test
 ```
+<br>
 
 ## API Documents
 
@@ -236,5 +211,22 @@ $ yarn test
   http://localhost:4000/api-docs
 
 - 운영
-  http://localhost:5000/api-docs
+  http://localhost:8000/api-docs
 
+<br>
+<br>
+
+# cf. 로컬 실행
+```bash
+$ npm isntall -g yarn
+$ yarn install
+$ DEBUG=star-server:* yarn run start:debug
+
+http://localhost:3000/api-docs
+```
+<br>
+<br>
+
+## 6/20 할일
+[√] 다단계 빌드 적용  \
+https://www.notion.so/wishty/Use-Node-js-with-Docker-and-Docker-Compose-to-improve-DX-2eebf0f4b0d646bfbe2e58596609f477

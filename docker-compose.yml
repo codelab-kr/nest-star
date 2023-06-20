@@ -2,12 +2,12 @@ version: '3.9'
 services:
   db:
     image: mysql:8
-    container_name: star-dev-db
+    container_name: star-db
     command:
       - --default-authentication-plugin=mysql_native_password
       - --default-time-zone=+09:00
     volumes:
-      - star-dbdata-dev:/var/lib/mysql
+      - star-dbdata:/var/lib/mysql
       - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
     ports:
       - ${DB_HOST_PORT}:${DB_CONTAINER_PORT}
@@ -19,16 +19,22 @@ services:
       TZ: Asia/Seoul
     restart: always
     networks:
-      - star-network-dev
-  server:
+      - star-network
+    profiles:
+      - prod
+      - dev
+
+  server-dev:
     build:
       context: ./
-    container_name: star-server-dev
+      target: development
+    container_name: star-server
     restart: always
     working_dir: /usr/src/app
     volumes:
-      - /usr/src/app/node_modules
-      - ./:/usr/src/app
+      - star-appdata:/usr/src/app
+      - star-nodedata:/usr/src/app/node_modules
+      - ./src:/usr/src/app/src
     ports:
       - ${APP_HOST_PORT_DEV}:${APP_CONTAINER_PORT}
     depends_on:
@@ -37,13 +43,43 @@ services:
       - bash
       - -c
       - |
-        ./wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15
-        yarn start:dev
+        ./wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15 && yarn start:dev
     networks:
-      - star-network-dev
+      - star-network
+    profiles:
+      - dev
+
+  server-prod:
+    build:
+      context: ./
+      target: production
+    container_name: star-server-prod
+    restart: always
+    working_dir: /usr/src/app
+    volumes:
+      - star-appdata:/usr/src/app
+    ports:
+      - ${APP_HOST_PORT_PROD}:${APP_CONTAINER_PORT}
+    depends_on:
+      - db
+    command:
+      - bash
+      - -c
+      - |
+        ./wait-for-it.sh db:${DB_CONTAINER_PORT} -t 15 && yarn start:prod
+    networks:
+      - star-network
+    profiles:
+      - prod
+
 networks:
-  star-network-dev:
+  star-network:
     driver: bridge
+
 volumes:
-  star-dbdata-dev:
+  star-dbdata:
+    driver: local
+  star-appdata:
+    driver: local
+  star-nodedata:
     driver: local

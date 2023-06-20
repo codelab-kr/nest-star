@@ -8,5 +8,5 @@ yarn-error.log*
 .vscode/
 dist/
 logs/
-*Dockerfile*
-docke-compose*
+Dockerfile*
+docke-compose.yml*
