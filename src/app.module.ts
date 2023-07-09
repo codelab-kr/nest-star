@@ -16,7 +16,7 @@ import { join } from 'path';
 import { ExceptionModule } from './exception/exception.module';
 import { TypeOrmExModule } from './typeorm-ex/typeorm-ex.module';
 import { BatchModule } from './batch/batch.module';
-import { FileModule } from './file/file.module';
+// import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -36,7 +36,7 @@ import { FileModule } from './file/file.module';
     TypeOrmExModule,
     ExceptionModule,
     BatchModule,
-    FileModule,
+    // FileModule,
   ],
   providers: [
     {
