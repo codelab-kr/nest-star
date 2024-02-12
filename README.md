@@ -225,8 +225,4 @@ $ DEBUG=star-server:* yarn run start:debug
 http://localhost:3000/api-docs
 ```
 <br>
-<br>
 
-## 6/20 할일
-[√] 다단계 빌드 적용  \
-https://www.notion.so/wishty/Use-Node-js-with-Docker-and-Docker-Compose-to-improve-DX-2eebf0f4b0d646bfbe2e58596609f477
